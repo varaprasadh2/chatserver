@@ -1,10 +1,6 @@
 # chat server
 
 ## todo
-    - auth
-        - login
-        - sign up
-    
     - presence channels/subscriptions
     - subscriptions 
 
