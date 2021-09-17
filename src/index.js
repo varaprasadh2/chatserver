@@ -21,17 +21,13 @@ const RootRouter = require("./routes/");
 
 const app = express();
 
-require("./controllers/auth/index");
-
-// FIXME: 
 const pusher = new Pusher({
-    appId: "1265919",
-    key: "be42df8733a2a17f2fcc",
-    secret: "16cc4ca9fc870abc9a85",
-    cluster: "ap2",
+    appId: process.env.PUSHER_APP_ID,
+    key: process.env.PUSHER_APP_KEY,
+    secret: process.env.PUSHER_APP_SECRET,
+    cluster: process.env.PUSHER_APP_CLUSTER,
     useTLS: true,
 });
-
 
 
 app.use(cookieParser());
@@ -50,24 +46,11 @@ app.use((req,res, next) => {
 app.use("/",RootRouter);
 
 
-app.post("/message", (req,res)=>{
-  const payload = req.body;
-
-   pusher.trigger("pusher-channel", 'message', payload);
-
-   return res.end();
-});
-
 app.post("/pusher/auth", (req,res)=>{
     const socketId = req.body.socket_id;
     const channel = req.body.channel_name;
     const auth = pusher.authenticate(socketId, channel);
     return res.send(auth);
-});
-
-
-app.get("/ping", (req, res) => {
-    return res.send("pong");
 });
 
 
