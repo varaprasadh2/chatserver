@@ -1,0 +1,30 @@
+[
+    {
+        "id": "b879b91e-18ee-42be-9b84-859561ede1e7",
+        "email": "johndoe@test.com",
+        "firstName": "John",
+        "lastName": "Doe",
+        "password": "$2b$05$dT/B5PsPgD/cs3xKIyqn5eYaDJbZEKedvp8NiAh9OR8/Eu/Ew1CNW"
+    },
+    {
+        "id": "a40c9871-b315-475d-911f-6835f816e59b",
+        "email":"markzuck@test.com",
+        "firstName":"Mark",
+        "lastName":"Zuck",
+        "password":"$2b$05$dT/B5PsPgD/cs3xKIyqn5eYaDJbZEKedvp8NiAh9OR8/Eu/Ew1CNW"
+    },
+    {
+        "id": "c5c4a40d-5074-4f9b-bb74-744d55eceaa3",
+        "email":"juliewilliams@test.com",
+        "firstName":"Julie",
+        "lastName":"Williams",
+        "password":"$2b$05$dT/B5PsPgD/cs3xKIyqn5eYaDJbZEKedvp8NiAh9OR8/Eu/Ew1CNW"
+    },
+    {
+        "id": "3c7f1a84-4197-4eff-bafe-40ef2d86916b",
+        "email":"elonmusk@test.com",
+        "firstName":"Musk",
+        "lastName":"Elon",
+        "password":"$2b$05$dT/B5PsPgD/cs3xKIyqn5eYaDJbZEKedvp8NiAh9OR8/Eu/Ew1CNW"
+    }
+]
