@@ -15,11 +15,13 @@ Router.post("/message", async (req,res)=> {
 
             const { 
                     body = '',
-                    channelId = null,
+                    channelId = null,  // null if first time trying to send a direct message 
                     participants, 
                     channelType = 0,
 
                 } = req.body;
+            
+
 
             if(!!body == false) throw new Error("message body is required");
 
@@ -43,6 +45,9 @@ Router.post("/message", async (req,res)=> {
                 }
             }
 
+            // if it's group chat and channelId is not sent by client, 
+            if(!session.channelId) throw new Error("channelId is required");
+
             
             // just create a message it'll handle rest;
             const {message,  recipients } = await createMessage({
@@ -52,6 +57,8 @@ Router.post("/message", async (req,res)=> {
                 files: []
             });
             
+            //TODO: re-active inactive(deleted the chat their side) channel_participants ie, set active = 1 if active = 0;
+
             // emit a message on this channel, and have to check if user is online and didn't subscribed this channel 
             // req.pusher.emit(channelId, 'message', { message, ...info })
             // FIXME: req.pusher.emit(session.channelId, 'NEW_MESSAGE', message);
@@ -74,9 +81,12 @@ Router.post("/message", async (req,res)=> {
 
 Router.post("/new-channel", (req, res)=>{
     // creates new group chat channel 
- 
+    
 })
 
+Router.get("/channels", (req,res)=> {
+    // return active channels for the user,
 
+})
 
 module.exports = Router;

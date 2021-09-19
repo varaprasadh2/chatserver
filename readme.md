@@ -11,9 +11,8 @@
         - email verification link
 
 # docker setup to run postgres db container 
-
-    - `docker pull postgres:<tag>`
-    - `docker run --rm --name chatdb -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 -v ./data:/var/lib/postgresql/data postgres`
+    - install docker 
+    - `docker run --rm --name chatdb -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 -v data:/var/lib/postgresql/data postgres`
 
 
 # database schema
@@ -26,9 +25,9 @@
     - Message
         - id
         - senderId,
+        - files : array<jsonb> contains file metadata if any
         - body : text => markdownText, format and render markdown 
-                - handle the text when deleting the message;
-                 body is enough to handle media
+                - handle the text when deleting the message.
         - created_at,
         - updated_at,
 
@@ -56,14 +55,12 @@
         - createdAt
         - updatedAt
 
-
-
-    // TODO: do this later, 
+    // TODO: do this later, useful in group chats,  
     - channel_activity : to keep track of actions happened in the channel
         - id
         - channel_id
         - activity_type: int ? 
-        - content : String markdow? 
+        - content : String markdown? 
 
 
 
@@ -78,19 +75,7 @@
 
 
 # terminologies
-
-
-
-
-# some key things to keep track of
-    - for direct chats
-        - don't create a channel in db until either side of user sends a message
-        - before creating a new channel,check if there is a existing channel
-
-# cases
-    - when user tries to message a user + not having a existing channel
-    - when user tries to message a user + having a channel
-
+    - channel: normal chat thread. can be a direct chat or group chat
 
 
 /**

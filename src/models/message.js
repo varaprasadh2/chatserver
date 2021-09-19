@@ -1,5 +1,5 @@
 
-const { Model } = require('sequelize');
+const { Model, DataTypes:dt } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Message extends Model {
@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     senderId: {
       type: DataTypes.UUID,
       allowNull: false
+    },
+    files: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
     },
     body: {
       type: DataTypes.TEXT,

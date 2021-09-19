@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       
     }
   };
+  
   Channel.init({
     id: {
       type: DataTypes.UUID,
@@ -22,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     ownerId: {
       type: DataTypes.UUID
+    },
+    lastActiveOn: {
+      type: DataTypes.DATE
     },
     type: {
       type: DataTypes.INTEGER,

@@ -10,6 +10,9 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false
       },
+      files: {
+        type: Sequelize.ARRAY(Sequelize.JSONB),
+      },
       body: {
         type: Sequelize.TEXT,
         allowNull: false

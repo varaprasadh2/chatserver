@@ -16,6 +16,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0 // assuming it's direct chat
       },
+      lastActiveOn: {
+        type: Sequelize.DATE
+      },
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW

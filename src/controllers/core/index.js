@@ -48,8 +48,11 @@ const createMessage = async ({ body, senderId, channelId, files } ) => {
 
         // insert message
         const newMessage = await Message.create(message);
-
-
+        
+        // update channel lastActiveOn for sorting purpose
+        await channel.update({
+            lastActiveOn: Date.now()
+        })
         // insert recipients 
         await Recipient.bulkCreate(recipients);
                 
@@ -153,8 +156,7 @@ const deleteChannel = async payload => {
  */
 
 const getCommonChannels = async (userIds, channelType = 0) => {
-    // group by channel_participants.type and channel_participants.type = 'direct'
-    //TODO:
+
     if (!userIds || userIds.length == 0) throw new Error("participants required");
 
 
@@ -187,6 +189,20 @@ const getChannelParticipants = async channelId => {
     });
     return participants;
 };
+
+
+/**
+ * 
+ * @param userId  
+ * @returns 
+ * get all the channels for the user, sorted by last message timestamp
+ */
+const getChannels = async (userId) => {
+    // return channels which user not deleted or archived TODO: handle this later;
+
+   return [];
+
+}
 
 module.exports = {
     createMessage,
