@@ -1,23 +1,10 @@
 # chat server
-
-## todo
-    - presence channels/subscriptions
-    - subscriptions 
-
-
-## authentication
-    - TODO
-        - handle refresh token
-        - email verification link
-
 # docker setup to run postgres db container 
     - install docker 
     - `docker run --rm --name chatdb -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 -v data:/var/lib/postgresql/data postgres`
 
 
 # database schema
-    -TODO: 
-        - apply indexes 
     - User 
         - blah 
         - blah
@@ -77,15 +64,9 @@
 # terminologies
     - channel: normal chat thread. can be a direct chat or group chat
 
+# TODO's
 
-/**
- * @description channel is which users messages are stored 
- * for specific conversation
- * 
- */
-
-
-
-
-
-
+- handle presence channels
+- create login/sign up page.
+- load channels and handle messages at frontend side
+- handle new messages and channel updates
