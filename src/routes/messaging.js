@@ -1,4 +1,4 @@
-const { getCommonChannels, createChannel, getChannelParticipants, createMessage } = require('../controllers/core');
+const { getCommonChannels, createChannel, getChannelParticipants, createMessage, getChannels } = require('../controllers/core');
 
 const Router = require('express').Router();
 
@@ -79,14 +79,29 @@ Router.post("/message", async (req,res)=> {
         }
 });
 
+// can create a group chat channel 
 Router.post("/new-channel", (req, res)=>{
-    // creates new group chat channel 
+    // TODO: creates new group chat channel 
     
 })
 
-Router.get("/channels", (req,res)=> {
+Router.get("/channels", async (req,res)=> {
     // return active channels for the user,
+    try{
+        const currentUser = req.user;
+        // make a query to get channel info
+        const channels = await getChannels(currentUser.userId);
 
-})
+        res.send({
+            channels
+        })
+        
+    }catch(err){
+        return res.status(400).send({
+            error: error.message
+        });
+    }
+});
+
 
 module.exports = Router;

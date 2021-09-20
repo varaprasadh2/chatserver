@@ -199,8 +199,48 @@ const getChannelParticipants = async channelId => {
  */
 const getChannels = async (userId) => {
     // return channels which user not deleted or archived TODO: handle this later;
+    if(!userId) throw new Error("userId required to getChannels");
 
-   return [];
+    const _channels = sequelize.query(`
+        with "userChannels" as (
+  	select
+  		ch.*
+  	 from "Channels" ch
+      left join "ChannelParticipants" cp
+      	on ch.id = cp."channelId"
+     where cp."userId" = :userId
+     group by ch.id
+  ),
+  "channelMembers" as (
+ 	select
+    	ch.id "channelId",
+      json_strip_nulls(
+    	json_agg(
+          	json_build_object(
+              'id', cp."userId",
+              'firstName', u."firstName",
+              'lastName', u."lastName",
+              'email', u.email
+            )
+        )
+       )as participants from "Channels" ch
+    left join "ChannelParticipants" cp
+        on ch.id = cp."channelId"
+    left join "Users" u
+        on u.id = cp."userId"
+    group by ch.id
+    )
+    select * from "userChannels" uc
+        left join "channelMembers" cm
+            on cm."channelId" = uc.id
+    `, {
+        replacements: {
+            userId : userId
+        },
+        type: QueryTypes.SELECT
+    })
+
+   return _channels;
 
 }
 
@@ -210,6 +250,7 @@ module.exports = {
     createChannel,
     deleteChannel,
     getCommonChannels,
-    getChannelParticipants
+    getChannelParticipants,
+    getChannels
 }
 
