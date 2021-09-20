@@ -12,12 +12,23 @@ Router.post("/login", async (req,res) => {
         const token = await getAccessTokenForUser(user);
 
         res.cookie('accessToken',token, { httpOnly: true });
-
-        return res.send(user);
+        
+        // if accessToken fails, regenerate it using refreshToken 
+        return res.send({
+            user: user,
+            auth: {
+                accessToken: token,
+                refreshToken: null
+            }
+        });
 
     }catch(error){
-    
-        return res.status(400).send(error)
+        console.log({
+            error
+        })
+        return res.status(400).send({
+            error:"invalid credentials"
+        })
     }
 
 });
@@ -37,8 +48,15 @@ Router.post("/signup", async (req,res)=> {
        const token = await getAccessTokenForUser(user);
 
        res.cookie('accessToken', token, { httpOnly: true });
+       
 
-       return res.send(user);
+       return res.send({
+           user: user,
+           auth: {
+               accessToken: token,
+               refreshToken: null
+           }
+       });
 
    }catch(error){
 

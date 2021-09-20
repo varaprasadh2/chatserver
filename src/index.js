@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 
 
 
-
+// loads environment variables
 dotENV.config({
     path: path.resolve(__dirname, '..','.env')
 });
@@ -17,6 +17,7 @@ dotENV.config({
 // routes
 
 const RootRouter = require("./routes/"); 
+const { decodeToken } = require('./utils/jwt');
 
 
 const app = express();
@@ -32,7 +33,10 @@ const pusher = new Pusher({
 
 app.use(cookieParser());
 
-app.use(cors());
+app.use(cors({
+   credentials: true,
+   origin:true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
@@ -43,18 +47,26 @@ app.use((req,res, next) => {
     next();
 });
 
-app.use("/",RootRouter);
-
-
-app.post("/pusher/auth", (req,res)=>{
+app.post("/pusher/auth", async (req, res) => {
     const socketId = req.body.socket_id;
-    const channel = req.body.channel_name;
-    
-    const auth = pusher.authenticate(socketId, channel, {
+    const channelId = req.body.channel_name; // unique channel name, in our case it's just id 
+    const accessToken = req.body.accessToken;
 
-    });
+    const user = await decodeToken(accessToken);
+
+    const data = {
+        user_id: user.userId,
+        ...user, 
+        socketId,
+        channelId
+    };
+
+    const auth = pusher.authenticate(socketId, channelId, data);
     return res.send(auth);
 });
+
+
+app.use("/",RootRouter);
 
 
 const PORT = process.env.PORT || 3001;

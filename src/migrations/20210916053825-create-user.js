@@ -38,7 +38,10 @@ module.exports = {
       updatedAt: {
         type: DataTypes.DATE,
         defaultValue: Sequelize.NOW
-      }
+      },
+      // avatar: {
+      //   type: Sequelize.JSONB,
+      // }
     });
   },
   down: async (queryInterface, Sequelize) => {

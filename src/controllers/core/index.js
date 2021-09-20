@@ -198,7 +198,9 @@ const getChannelParticipants = async channelId => {
  * get all the channels for the user, sorted by last message timestamp
  */
 const getChannels = async (userId) => {
-    // return channels which user not deleted or archived TODO: handle this later;
+    // P3: 
+    // TODO: handle this later;
+    // return channels which user not deleted or archived 
     if(!userId) throw new Error("userId required to getChannels");
 
     const _channels = sequelize.query(`
@@ -230,9 +232,12 @@ const getChannels = async (userId) => {
         on u.id = cp."userId"
     group by ch.id
     )
-    select * from "userChannels" uc
-        left join "channelMembers" cm
-            on cm."channelId" = uc.id
+    select 
+        * 
+    from "userChannels" uc
+    left join "channelMembers" cm
+        on cm."channelId" = uc.id
+    order by uc."lastActiveOn";
     `, {
         replacements: {
             userId : userId
