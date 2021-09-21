@@ -6,7 +6,13 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "echo have to write tests..."
+    "test": "echo have to write tests...",
+    "postgres-up": "docker run --rm --name chatdb -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 -v data:/var/lib/postgresql/data postgres",
+    "postgres-down": "docker stop chatdb",
+    "db-up": "sequelize db:migrate",
+    "db-down": "sequelize db:migrate:undo:all",
+    "seed-down":"sequelize db:seed:undo:all",
+    "seed-up": "sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",

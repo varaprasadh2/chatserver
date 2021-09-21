@@ -43,9 +43,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     },
-    // avatar:  {
-    //   type: DataTypes.JSONB,
-    // }
+    avatar:  {
+      type: DataTypes.JSONB,
+    }
   }, {
     sequelize,
     modelName: 'User',

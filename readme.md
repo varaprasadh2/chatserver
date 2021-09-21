@@ -1,14 +1,14 @@
 # chat server
-# docker setup to run postgres db container 
-    - install docker 
-    - `docker run --rm --name chatdb -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 -v data:/var/lib/postgresql/data postgres`
 
+# setup
+    - install dependencies `npm install`
+    - install & configure docker then run `npm run postgres-up`
+    - then start the app `npm run dev` for dev, or `npm start` for prod. 
 
 # database schema
     - User 
         - blah 
         - blah
-
     - Message
         - id
         - senderId,
