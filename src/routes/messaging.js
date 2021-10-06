@@ -31,8 +31,10 @@ Router.post("/message", async (req,res)=> {
             };
 
             if(channelType == 0){
-                const commonChannels = await getCommonChannels(participants, channelType);
-                session.channelId = commonChannels.length ? commonChannels[0].id : null;
+                if(!session.channelId){
+                    const commonChannels = await getCommonChannels(participants, channelType);
+                    session.channelId = commonChannels.length ? commonChannels[0].id : null;
+                }
                 // if there is no existing channel then create one
                 if(!session.channelId){
                     const newChannel = await createChannel({ 
@@ -57,12 +59,12 @@ Router.post("/message", async (req,res)=> {
                 files: []
             });
             
+            message.channelId = session.channelId
+         
             //TODO: re-active inactive(deleted the chat their side) channel_participants ie, set active = 1 if active = 0;
 
             // emit a message on this channel, and have to check if user is online and didn't subscribed this channel 
-            // req.pusher.emit(channelId, 'message', { message, ...info })
-            // FIXME: req.pusher.emit(session.channelId, 'NEW_MESSAGE', message);
-
+            req.pusher.trigger(`presence-${channelId}`, 'MESSAGE', { message });
 
            return res.send({
                status: "success",

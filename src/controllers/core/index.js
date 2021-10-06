@@ -52,13 +52,14 @@ const createMessage = async ({ body, senderId, channelId, files } ) => {
         // update channel lastActiveOn for sorting purpose
         await channel.update({
             lastActiveOn: Date.now()
-        })
+        });
+
         // insert recipients 
         await Recipient.bulkCreate(recipients);
                 
 
         return {
-            message: newMessage,
+            message: newMessage.get({ plain: true }),
             recipients,
         };
         

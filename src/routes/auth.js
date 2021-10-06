@@ -67,10 +67,8 @@ Router.post("/signup", async (req,res)=> {
        });
    }
 
-
-
-
 });
+
 
 Router.post("/forgot-password", (req,res) => {
     // TODO: 
